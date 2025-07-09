@@ -4,9 +4,9 @@ export class Point{
         this.posY = posY;
 
         this.upperX = posX - 16;
-        this.lowerX = posX + 16;
-
         this.upperY = posY - 16;
+        
+        this.lowerX = posX + 16;
         this.lowerY = posY + 16;
     }
 
