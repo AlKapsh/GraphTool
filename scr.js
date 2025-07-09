@@ -1,5 +1,6 @@
 //@ts-check
 import { Point } from "./point.js";
+import { overlapCheck } from "./utils.js";
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const imgSize = 64;
@@ -28,15 +29,29 @@ var PointTool = function(e){
     var x = e.offsetX;
     var y = e.offsetY;
 
+    var isOverlaps = overlapCheck(x, y, allPoints);
+    
+    if(isOverlaps){
+        return;
+    }
+
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 360 );
     ctx.closePath();
     ctx.fillStyle = "black";
     ctx.fill();
 
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.fillText(allPoints.length, x, y);
 
     var point = new Point(x,y);
     allPoints.push(point);
+
+    ctx.fillStyle = "black";
 }
 
 /**
