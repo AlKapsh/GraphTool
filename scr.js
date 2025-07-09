@@ -1,24 +1,10 @@
 //@ts-check
 import { Point } from "./point.js";
 import { overlapCheck } from "./utils.js";
-const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
+import { ctx } from "./spriteLoader.js";
+import { updateInstuments } from "./spriteLoader.js";
+
 const imgSize = 64;
-const ImgPointTool = new Image();
-const ImgConnectTool = new Image();
-
-ImgPointTool.src = "Sprites/PointTool.png";
-ImgConnectTool.src = "Sprites/ConnectTool.png";
-
-ImgConnectTool.onload = () => {
-    ctx.drawImage(ImgConnectTool, 64, 0, imgSize, imgSize);
-    ctx.strokeRect(64, 0, imgSize, imgSize);
-}
-ImgPointTool.onload = () => {
-    ctx.drawImage(ImgPointTool, 0, 0, imgSize, imgSize);
-    ctx.strokeRect(0, 0, imgSize, imgSize);
-}
-
 var allPoints = [];
 
 /**
@@ -61,14 +47,39 @@ var ConncectTool = function(e){
     console.log(allPoints);
 };
 
+
+var RemLastTool = function(){
+    var radius = imgSize / 4;
+    var point = allPoints.pop();
+    
+    ctx.beginPath()
+    ctx.arc(point.posX, point.posY, radius + 1, 0 , 360);
+    ctx.closePath();
+    ctx.fillStyle = "white";
+    ctx.fill();
+    
+    ctx.fillStyle = "black";
+}
+
 var CurrentTool = PointTool;
 
 function changeTool(toolNumber){
     ctx.strokeStyle = "black";
-    ctx.strokeRect(0, 0, imgSize, imgSize);
-    ctx.strokeRect(64, 0, imgSize, imgSize);
+    updateInstuments();
 
-    CurrentTool = toolNumber == 0 ? PointTool : ConncectTool;
+    switch(toolNumber){
+        case 0:
+            CurrentTool = PointTool;
+            break;
+        case 1:
+            CurrentTool = ConncectTool;
+            break;
+        case 2:
+            RemLastTool();
+            break;
+        default :
+            CurrentTool = PointTool;
+        }
 
     ctx.strokeStyle = "red";
     ctx.strokeRect(imgSize * toolNumber, 0, imgSize, imgSize);
