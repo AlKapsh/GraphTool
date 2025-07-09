@@ -1,11 +1,12 @@
 //@ts-check
-import { Point } from "./point";
+import { Point } from "./point.js";
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const imgSize = 64;
 const ImgPointTool = new Image();
-ImgPointTool.src = "Sprites/PointTool.png";
 const ImgConnectTool = new Image();
+
+ImgPointTool.src = "Sprites/PointTool.png";
 ImgConnectTool.src = "Sprites/ConnectTool.png";
 
 ImgConnectTool.onload = () => {
@@ -23,7 +24,7 @@ var allPoints = [];
  * @param {MouseEvent} e
 */
 var PointTool = function(e){
-    var radius = e.offsetX - (imgSize / 4);
+    var radius = imgSize / 4;
     var x = e.offsetX;
     var y = e.offsetY;
 
@@ -35,7 +36,7 @@ var PointTool = function(e){
 
 
     var point = new Point(x,y);
-
+    allPoints.push(point);
 }
 
 /**
