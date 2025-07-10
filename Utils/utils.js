@@ -1,7 +1,5 @@
 import { Point } from "../Models/point.js";
-import { connectPoints, drawPoint } from "../Services/spriteLoader.js";
-import { removePoint } from "../Services/spriteLoader.js";
-import { highlightPoint } from "../Services/spriteLoader.js";
+import { connectPoints, drawPoint, removePoint,  highlightPoint} from "../Services/spriteLoader.js";
 
 var allPoints = [];
 

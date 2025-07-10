@@ -1,22 +1,10 @@
 //@ts-check
 import { updateInstuments } from "./Services/spriteLoader.js";
-
-import { PointTool } from "./Utils/utils.js";
-import { RemLastTool } from "./Utils/utils.js";
+import { PointTool, RemLastTool,  ConncectTool } from "./Utils/utils.js";
 
 const imgSize = 64;
-var allPoints = [];
-
-
-
-/**
- * @param {MouseEvent} e
-*/
-var ConncectTool = function(e){
-    console.log(allPoints);
-};
-
 var CurrentTool = PointTool;
+
 
 function changeTool(toolNumber){
     
@@ -38,7 +26,6 @@ function changeTool(toolNumber){
 }
 
 
-
 /**
  * @param {MouseEvent} e
 */
@@ -58,6 +45,7 @@ document.addEventListener("click", e => {
     e.preventDefault();
     documentOnClick(e);
 });
+
 
 document.addEventListener("keydown", e => {
     if(e.ctrlKey && e.key == "z"){
