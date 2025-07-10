@@ -1,12 +1,15 @@
 import { Point } from "../Models/point.js";
-import { drawPoint } from "../Services/spriteLoader.js";
+import { connectPoints, drawPoint } from "../Services/spriteLoader.js";
 import { removePoint } from "../Services/spriteLoader.js";
-const imgSize = 64;
+import { highlightPoint } from "../Services/spriteLoader.js";
+
 var allPoints = [];
+
+var selectedPoint = undefined;
 
 /**
  * Checks if position of new point overlaps with existing points
- * @returns  {boolean} ture if overlaps \ false either
+ * @returns  {Point} point if overlaps \ undefined either
  */
 export function overlapCheck(x, y, allPoints){
     var finds = allPoints.find(item => 
@@ -16,7 +19,7 @@ export function overlapCheck(x, y, allPoints){
         y <= item.lowerY + 16
         );
     
-    return !!finds;
+    return finds;
 }
 
 /**
@@ -36,6 +39,28 @@ export var PointTool = function(e){
     drawPoint(point, allPoints.length);
 
     allPoints.push(point);
+}
+
+/**
+ * @param {MouseEvent} e
+*/
+export var ConncectTool = function(e){
+    var point = overlapCheck(e.offsetX, e.offsetY, allPoints);
+
+    if(!selectedPoint){
+        selectedPoint = overlapCheck(e.offsetX, e.offsetY, allPoints);
+        highlightPoint(selectedPoint, "green");
+        return;
+    }
+
+    connectPoints(selectedPoint, point);
+
+    highlightPoint(selectedPoint, "black");
+    highlightPoint(point, "black");
+
+    selectedPoint = undefined;
+
+
 }
 
 export var RemLastTool = function(){
