@@ -1,3 +1,9 @@
+import { Point } from "../Models/point.js";
+import { drawPoint } from "../Services/spriteLoader.js";
+import { removePoint } from "../Services/spriteLoader.js";
+const imgSize = 64;
+var allPoints = [];
+
 /**
  * Checks if position of new point overlaps with existing points
  * @returns  {boolean} ture if overlaps \ false either
@@ -11,4 +17,34 @@ export function overlapCheck(x, y, allPoints){
         );
     
     return !!finds;
+}
+
+/**
+ * @param {MouseEvent} e
+*/
+export var PointTool = function(e){
+    var x = e.offsetX;
+    var y = e.offsetY;
+
+    var isOverlaps = overlapCheck(x, y, allPoints);
+    
+    if(isOverlaps){
+        return;
+    }
+    var point = new Point(x,y);
+    
+    drawPoint(point, allPoints.length);
+
+    allPoints.push(point);
+}
+
+export var RemLastTool = function(){
+
+    if(allPoints.length <= 0){
+        return
+    }
+    var point = allPoints.pop();
+
+    removePoint(point);
+    
 }
