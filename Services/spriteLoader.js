@@ -98,13 +98,24 @@ export function connectPoints(point, otherPoint){
         return;
     }
 
+    var dx = point.posX - otherPoint.posX;;
+    var dy = point.posY - otherPoint.posY;
+
+    var angle = Math.atan2(dy,dx);
+
+    var startX = point.posX - Math.cos(angle) * radius;
+    var startY = point.posY - Math.sin(angle) * radius;
+
+    var startX1 = otherPoint.posX + Math.cos(angle) * radius;
+    var startY1 = otherPoint.posY + Math.sin(angle) * radius;
+
     ctx.lineWidth = 2;
     ctx.strokeStyle = "grey";
 
     ctx.beginPath();
 
-    ctx.moveTo(point.posX, point.posY);
-    ctx.lineTo(otherPoint.posX, otherPoint.posY);
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(startX1, startY1);
 
     ctx.closePath();
     ctx.stroke();
