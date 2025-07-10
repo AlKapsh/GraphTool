@@ -1,8 +1,8 @@
 //@ts-check
-import { Point } from "./point.js";
-import { overlapCheck } from "./utils.js";
-import { ctx } from "./spriteLoader.js";
-import { updateInstuments } from "./spriteLoader.js";
+import { Point } from "./Models/point.js";
+import { overlapCheck } from "./Utils/utils.js";
+import { ctx } from "./Services/spriteLoader.js";
+import { updateInstuments } from "./Services/spriteLoader.js";
 
 const imgSize = 64;
 var allPoints = [];
