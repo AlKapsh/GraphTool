@@ -53,8 +53,8 @@ export var ConncectTool = function(e){
 
     connectPoints(selectedPoint, point);
 
-    highlightPoint(selectedPoint, "black");
-    highlightPoint(point, "black");
+    drawPoint(point, allPoints.indexOf(point));
+    drawPoint(selectedPoint, allPoints.indexOf(selectedPoint));
 
     selectedPoint = undefined;
 
