@@ -31,6 +31,7 @@ ImgBackTool.onload = () => {
 
 export function updateInstuments(toolNumber){
     ctx.fillStyle = 'black';
+    ctx.lineWidth = 2;
     for(var i = 0; i < maxInstruments; i++){
         ctx.strokeRect(i * 64, 0, imgSize, imgSize);
     }
@@ -38,6 +39,7 @@ export function updateInstuments(toolNumber){
     ctx.strokeStyle = "red";
     ctx.strokeRect(imgSize * toolNumber, 0, imgSize, imgSize);
 
+    ctx.lineWidth = 1;
     ctx.strokeStyle = "black";
 }
 
@@ -70,6 +72,46 @@ export function removePoint(point){
     ctx.fillStyle = "white";
     ctx.fill();
     ctx.fillStyle = "black";
+}
+
+export function highlightPoint(point, color){
+
+    if(!point){
+        return;
+    }
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    
+    ctx.arc(point.posX, point.posY, radius, 0, 360);
+
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+}
+
+export function connectPoints(point, otherPoint){
+    if(!point || !otherPoint){
+        return;
+    }
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "grey";
+
+    ctx.beginPath();
+
+    ctx.moveTo(point.posX, point.posY);
+    ctx.lineTo(otherPoint.posX, otherPoint.posY);
+
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+
 }
 
 updateInstuments(0); 
