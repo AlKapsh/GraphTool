@@ -49,6 +49,11 @@ var ConncectTool = function(e){
 
 
 var RemLastTool = function(){
+
+    if(allPoints.length <= 0){
+        return
+    }
+
     var radius = imgSize / 4;
     var point = allPoints.pop();
     
@@ -101,14 +106,17 @@ function documentOnClick(e){
     }
     
     CurrentTool(e);
-
-    
-    //console.log(CurrentTool);
 }
 
 
 document.addEventListener("click", e => {
     e.preventDefault();
     documentOnClick(e);
-})
+});
+
+document.addEventListener("keydown", e => {
+    if(e.ctrlKey && e.key == "z"){
+        RemLastTool();
+    }
+});
 
