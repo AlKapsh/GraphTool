@@ -1,8 +1,10 @@
+import { HistoryConnect, HistorySet, IHistory } from "Models/history";
 import { Point } from "Models/pt";
 import { connectPoints, drawPoint, highlightPoint } from "Services/spriteLoder";
 
 var allPoints : Point[] = [];
 var selectedPoint : Point | undefined;
+var history : IHistory[] = [];
 
 export function overlapCheck(x : number, y : number, allPoints : Point[]) : Point | undefined{
     var finds = allPoints.find(item => 
@@ -31,8 +33,8 @@ export var PointTool = function(e : MouseEvent){
     drawPoint(point, allPoints.length);
     allPoints.push(point);
 
-    // var historyRecord = new HistorySet(point);
-    // history.push(historyRecord);
+    var historyRecord = new HistorySet(point, allPoints);
+    history.push(historyRecord);
 }
 
 
@@ -53,8 +55,8 @@ export var ConncectTool = function(e : MouseEvent){
     highlightPoint(point, 'black');
     highlightPoint(selectedPoint, 'black');
 
-    // var historyRecord = new HistoryConnect(selectedPoint, point);
-    // history.push(historyRecord);
+    var historyRecord = new HistoryConnect(selectedPoint, point, allPoints);
+    history.push(historyRecord);
 
     selectedPoint = undefined;
 }
@@ -65,7 +67,7 @@ export var RemLastTool = function(){
         return
     }
 
-    // var historyRecord = history.pop();
-    // historyRecord.undo();
+    var historyRecord = history.pop() as IHistory;
+    historyRecord.undo(allPoints);
     
 }
