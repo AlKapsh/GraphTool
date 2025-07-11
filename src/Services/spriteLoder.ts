@@ -115,6 +115,10 @@ export function connectPoints(point : Point, otherPoint : Point, color : string)
     var startY1 = otherPoint.posY + Math.sin(angle) * radius;
 
     ctx.lineWidth = 2;
+    if(color == "white"){
+        ctx.lineWidth += 1;
+    }
+
     ctx.strokeStyle = color;
 
     ctx.beginPath();
