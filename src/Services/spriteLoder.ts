@@ -1,12 +1,15 @@
-export const canvas = document.querySelector("#canvas");
+import { Point } from "Models/pt";
+
+export const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 
 canvas.width = 21 * 64;
 canvas.height = ~~(768 / 64) * 64;
-const maxInstruments = 21;
 
-export const ctx = canvas.getContext("2d");
-const imgSize = 64;
-const radius = imgSize / 4;
+const maxInstruments : number = 21;
+
+export const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+const imgSize : number = 64;
+const radius : number = imgSize / 4;
 
 const ImgPointTool = new Image();
 const ImgConnectTool = new Image();
@@ -15,6 +18,7 @@ const ImgBackTool = new Image();
 ImgPointTool.src = "Sprites/PointTool.png";
 ImgConnectTool.src = "Sprites/ConnectTool.png";
 ImgBackTool.src = "Sprites/RemoveLast.png";
+
 
 ImgPointTool.onload = () => {
     ctx.drawImage(ImgPointTool, 0, 0, imgSize, imgSize);
@@ -29,7 +33,8 @@ ImgBackTool.onload = () => {
     ctx.strokeRect(128, 0, imgSize, imgSize);
 }
 
-export function updateInstuments(toolNumber){
+
+export function updateInstuments(toolNumber : number){
     ctx.fillStyle = 'black';
     ctx.lineWidth = 2;
     for(var i = 0; i < maxInstruments; i++){
@@ -46,7 +51,7 @@ export function updateInstuments(toolNumber){
 /**
  * @param {Number} pointNumber Number of point to display
  */
-export function drawPoint(point, pointNumber ){
+export function drawPoint(point : Point, pointNumber : unknown){
     var radius = imgSize / 4;
 
     ctx.beginPath();
@@ -60,11 +65,11 @@ export function drawPoint(point, pointNumber ){
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    ctx.fillText(pointNumber, point.posX, point.posY);
+    ctx.fillText(pointNumber as string, point.posX, point.posY);
     ctx.fillStyle = "black";
 }
 
-export function removePoint(point){
+export function removePoint(point : Point){
 
     ctx.beginPath();
     ctx.arc(point.posX, point.posY, radius + 1, 0 , 360);
@@ -74,7 +79,7 @@ export function removePoint(point){
     ctx.fillStyle = "black";
 }
 
-export function highlightPoint(point, color){
+export function highlightPoint(point : Point, color : string){
 
     if(!point){
         return;
@@ -84,7 +89,7 @@ export function highlightPoint(point, color){
     ctx.lineWidth = 3;
     ctx.beginPath();
     
-    ctx.arc(point.posX, point.posY, radius, 0, 360);
+    ctx.arc(point.posX, point.posY, radius - 1, 0, 360);
 
     ctx.closePath();
     ctx.stroke();
@@ -93,7 +98,7 @@ export function highlightPoint(point, color){
     ctx.lineWidth = 1;
 }
 
-export function connectPoints(point, otherPoint){
+export function connectPoints(point : Point, otherPoint : Point, color : string){
     if(!point || !otherPoint){
         return;
     }
@@ -110,7 +115,7 @@ export function connectPoints(point, otherPoint){
     var startY1 = otherPoint.posY + Math.sin(angle) * radius;
 
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "grey";
+    ctx.strokeStyle = color;
 
     ctx.beginPath();
 
@@ -122,7 +127,6 @@ export function connectPoints(point, otherPoint){
 
     ctx.lineWidth = 1;
     ctx.strokeStyle = "black";
-
 }
 
 updateInstuments(0); 

@@ -1,12 +1,11 @@
-//@ts-check
-import { updateInstuments } from "./Services/spriteLoader.js";
-import { PointTool, RemLastTool,  ConncectTool } from "./Utils/utils.js";
+import { updateInstuments } from "Services/spriteLoder";
+import { ConncectTool, PointTool, RemLastTool } from "Utils/utility";
 
 const imgSize = 64;
 var CurrentTool = PointTool;
 
 
-function changeTool(toolNumber){
+function changeTool(toolNumber : number){
     
     updateInstuments(toolNumber);
 
@@ -26,10 +25,7 @@ function changeTool(toolNumber){
 }
 
 
-/**
- * @param {MouseEvent} e
-*/
-function documentOnClick(e){
+function documentOnClick(e : MouseEvent){
     var toolNumber = ~~(e.offsetX / 64);
 
     if(e.offsetY <= imgSize){
@@ -52,4 +48,3 @@ document.addEventListener("keydown", e => {
         RemLastTool();
     }
 });
-
