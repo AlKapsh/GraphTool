@@ -50,7 +50,7 @@ export var ConncectTool = function(e : MouseEvent){
     connectPoints(selectedPoint, point, 'grey');
 
     point.connected_to.push(selectedPoint);
-    selectedPoint.connected_to.push(selectedPoint);
+    selectedPoint.connected_to.push(point);
 
     highlightPoint(point, 'black');
     highlightPoint(selectedPoint, 'black');
@@ -70,4 +70,27 @@ export var RemLastTool = function(){
     var historyRecord = history.pop() as IHistory;
     historyRecord.undo(allPoints);
     
+}
+
+export function getAllPoints(){
+    return allPoints;
+}
+
+export function getConnectedPoints(point: Point){
+    let queue: Point[] = [];
+    let visited: Point[] = [];
+    let currentPoint: Point;
+    queue.push(point);
+
+    while(queue.length > 0){
+        currentPoint = queue.shift() as Point;
+
+        if(visited.find(i => i == currentPoint))
+            continue;
+
+        visited.push(currentPoint);
+
+        queue = queue.concat(currentPoint.connected_to);
+    }
+    return visited;
 }
