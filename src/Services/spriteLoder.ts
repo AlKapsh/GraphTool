@@ -1,4 +1,5 @@
 import { Point } from "Models/pt";
+import { getAllPoints, getConnectedPoints, overlapCheck } from "Utils/utility";
 
 export const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 
@@ -133,4 +134,35 @@ export function connectPoints(point : Point, otherPoint : Point, color : string)
     ctx.strokeStyle = "black";
 }
 
+function updateAllPoints(points: Point[]){
+    points.forEach(point => {
+        let pointIndex = points.indexOf(point);
+        drawPoint(point, pointIndex);
+    });
+}
+
+function hover(e : MouseEvent){
+    let points = getAllPoints();
+    if(points.length <= 0)
+        return;
+
+    let isOverlaps = overlapCheck(e.offsetX, e.offsetY, points);
+
+    if(isOverlaps){
+        let connectPoints = getConnectedPoints(isOverlaps);
+        connectPoints.forEach(point => {
+            highlightPoint(point, 'red');
+        })
+    }
+    else
+        updateAllPoints(points);
+}
+
 updateInstuments(0); 
+
+canvas.onmousemove = (e : MouseEvent) => {
+    hover(e);
+}
+
+
+
